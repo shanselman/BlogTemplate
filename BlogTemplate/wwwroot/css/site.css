@@ -30,9 +30,9 @@ nav {
     }
 
     nav li:nth-child(5) {
-        margin-left: 880px;
-        display: inline-block !important;
+        /*margin-left: 900px 0;*/
     }
+
     nav li {
         display: inline-block;
         margin-left: 20px;

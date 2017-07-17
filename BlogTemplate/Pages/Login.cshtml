@@ -1,0 +1,16 @@
+﻿@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<article>
+    <h2>@ViewData["Title"]</h2>
+    <form method="post">
+        <h3><label for="Username">Username</label></h3>
+        <input type="text" name="Username" @*asp-for="User.Name"*@ placeholder=""/>
+        <h3><label for="Password">Password</label></h3>
+        <input type="text" name="Password" @*asp-for="User.Password"*@ placeholder=""/>
+    </form>
+</article>
+
