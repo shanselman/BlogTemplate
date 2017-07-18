@@ -19,9 +19,9 @@ namespace BlogTemplate.Pages
         }
 
         [BindProperty]
-        public Post newPost { get; set; }
+        public Post NewPost { get; set; }
 
-        public Post oldPost { get; set; }
+        public Post OldPost { get; set; }
         public void OnGet()
         {
             InitializePost();
@@ -31,9 +31,9 @@ namespace BlogTemplate.Pages
         {
             string slug = RouteData.Values["slug"].ToString();
             BlogDataStore dataStore = new BlogDataStore();
-            newPost = oldPost = dataStore.GetPost(slug);
+            NewPost = OldPost = dataStore.GetPost(slug);
 
-            if(oldPost == null)
+            if(OldPost == null)
             {
                 RedirectToPage("/Index");
             }
@@ -42,30 +42,30 @@ namespace BlogTemplate.Pages
         public IActionResult OnPostPublish()
         {
             string slug = RouteData.Values["slug"].ToString();
-            newPost.IsPublic = true;
-            UpdatePost(newPost, slug);
-            return Redirect($"/Post/{newPost.Slug}");
+            NewPost.IsPublic = true;
+            UpdatePost(NewPost, slug);
+            return Redirect($"/Post/{NewPost.Slug}");
         }
 
         public IActionResult OnPostSaveDraft()
         {
             string slug = RouteData.Values["slug"].ToString();
-            newPost.IsPublic = false;
-            UpdatePost(newPost, slug);
+            NewPost.IsPublic = false;
+            UpdatePost(NewPost, slug);
             return Redirect("/Index");
         }
 
         public void UpdatePost(Post newPost, string slug)
         {
             BlogDataStore dataStore = new BlogDataStore();
-            oldPost = dataStore.GetPost(slug);
+            OldPost = dataStore.GetPost(slug);
             newPost.Tags = Request.Form["Tags"][0].Replace(" ", "").Split(",").ToList();
             
             SlugGenerator slugGenerator = new SlugGenerator();
             newPost.Slug = slugGenerator.CreateSlug(newPost.Title);
-            newPost.Comments = oldPost.Comments;
+            newPost.Comments = OldPost.Comments;
 
-            dataStore.UpdatePost(newPost, oldPost);
+            dataStore.UpdatePost(newPost, OldPost);
         }
     }
 }

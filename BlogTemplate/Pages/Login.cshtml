@@ -8,9 +8,10 @@
     <h2>@ViewData["Title"]</h2>
     <form method="post">
         <h3><label for="Username">Username</label></h3>
-        <input type="text" name="Username" @*asp-for="User.Name"*@ placeholder=""/>
+        <input type="text" name="Username" @*asp-for="Login.UserName"*@ placeholder=""/>
         <h3><label for="Password">Password</label></h3>
-        <input type="text" name="Password" @*asp-for="User.Password"*@ placeholder=""/>
+        <input type="text" name="Password" @*asp-for="Login.UserPassword"*@ placeholder=""/>
+        <input type="submit" name="login" value="Login User" asp-page-handler="Publish"/>
     </form>
 </article>
 
