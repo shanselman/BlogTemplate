@@ -1,0 +1,18 @@
+﻿@page
+@model UserRegistrationModel
+@{
+    ViewData["Title"] = "User Registration";
+}
+<article>
+    <h2>@ViewData["Title"]</h2>
+    <form method="post">
+        <h3><label for="User Email">User Email</label></h3>
+        <input type="email" name="Email" asp-for="Owner.LoginEmail" placeholder="" />
+
+        <h3><label for="Username">User Name</label></h3>
+        <input type="text" name="User Name" asp-for="Owner.LoginName" placeholder="" />
+
+        <h3><label for="Password">User Password</label></h3>
+        <input type="password" name="Password" asp-for="Owner.LoginPassword" placeholder="" />
+    </form>
+</article>
