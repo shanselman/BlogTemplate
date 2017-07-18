@@ -1,5 +1,5 @@
 ﻿@page
-@model LoginModel
+@model UserModel
 
 @{
     ViewData["Title"] = "Login";
@@ -9,9 +9,9 @@
     <h2>@ViewData["Title"]</h2>
     <form method="post">
         <h3><label for="Username">User Email</label></h3>
-        <input type="email" name="Email" asp-for="Login.UserEmail" placeholder=""/>
+        <input type="email" name="Email" asp-for="Owner.LoginEmail" placeholder=""/>
         <h3><label for="Password">Password</label></h3>
-        <input type="password" name="Password" asp-for="Login.UserPassword" placeholder=""/>
+        <input type="password" name="Password" asp-for="Owner.LoginPassword" placeholder=""/>
         <p><input type="submit" name="login" value="Login User" asp-page-handler="Publish" /></p>
     </form>
 </article>
