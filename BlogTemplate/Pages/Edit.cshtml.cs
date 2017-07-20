@@ -31,7 +31,7 @@ namespace BlogTemplate.Pages
         private void InitializePost()
         {
             string slug = RouteData.Values["slug"].ToString();
-            newPost = oldPost = _dataStore.GetPost(slug);
+            NewPost = OldPost = _dataStore.GetPost(slug);
 
             if(OldPost == null)
             {
@@ -57,14 +57,14 @@ namespace BlogTemplate.Pages
 
         public void UpdatePost(Post newPost, string slug)
         {
-            oldPost = _dataStore.GetPost(slug);
+            OldPost = _dataStore.GetPost(slug);
             newPost.Tags = Request.Form["Tags"][0].Replace(" ", "").Split(",").ToList();
             
             SlugGenerator slugGenerator = new SlugGenerator(_dataStore);
             newPost.Slug = slugGenerator.CreateSlug(newPost.Title);
             newPost.Comments = OldPost.Comments;
 
-            _dataStore.UpdatePost(newPost, oldPost);
+            _dataStore.UpdatePost(newPost, OldPost);
         }
     }
 }
