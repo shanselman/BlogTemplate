@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using BlogTemplate.Models;
+using BlogTemplate.Data;
 
 namespace BlogTemplate
 {
@@ -28,6 +24,11 @@ namespace BlogTemplate
             services.AddSingleton<Blog>();
             services.AddSingleton<IFileSystem, PhysicalFileSystem>();
             services.AddScoped<BlogDataStore>();
+
+            services.AddIdentity<ApplicationUser, ApplicationUserRole>()
+                .AddUserStore<BlogUserStore>()
+                .AddRoleStore<BlogUserRoleStore>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,13 +37,17 @@ namespace BlogTemplate
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                app.UseDatabaseErrorPage();
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                app.UseExceptionHandler("/Home/Error");
             }
 
             app.UseStaticFiles();
+
+            app.UseIdentity();
 
             app.UseMvc(routes =>
             {
