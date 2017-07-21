@@ -10,6 +10,15 @@ namespace BlogTemplate.Data
 {
     public class BlogUserStore : IUserStore<ApplicationUser>, IUserPasswordStore<ApplicationUser>
     {
+        private IUserStore<ApplicationUser> _IUserStore;
+        private IUserPasswordStore<ApplicationUser> _IUserPasswordStore;
+
+        public BlogUserStore(IUserStore<ApplicationUser> IUserStore, IUserPasswordStore<ApplicationUser> IUserPasswordStore)
+        {
+            _IUserStore = IUserStore;
+            _IUserPasswordStore = IUserPasswordStore;
+        }
+
         public Task<IdentityResult> CreateAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
@@ -46,6 +55,8 @@ namespace BlogTemplate.Data
 
         public Task<string> GetUserIdAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
+            
+
             throw new NotImplementedException();
         }
 
