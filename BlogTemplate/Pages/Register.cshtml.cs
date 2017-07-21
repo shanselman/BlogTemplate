@@ -24,7 +24,7 @@ namespace BlogTemplate.Pages
 
         public async Task<IActionResult> OnPostAsync(string username, string password)
         {
-            ApplicationUser user = new ApplicationUser { UserName = username};
+            ApplicationUser user = new ApplicationUser { UserName = username };
             IdentityResult result = await _userManager.CreateAsync(user, password);
             if(result.Succeeded)
             {
