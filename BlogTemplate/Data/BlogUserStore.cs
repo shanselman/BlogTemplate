@@ -5,13 +5,28 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using BlogTemplate.Models;
+using System.Xml.Linq;
 
 namespace BlogTemplate.Data
 {
     public class BlogUserStore : IUserStore<ApplicationUser>, IUserPasswordStore<ApplicationUser>
     {
+        const string StorageFolder = "UserFiles";
+        private IFileSystem _fileSystem;
+        public BlogUserStore(IFileSystem fileSystem)
+        {
+            _fileSystem = fileSystem;
+            _fileSystem.CreateDirectory(StorageFolder);
+        }
+
         public Task<IdentityResult> CreateAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
+            //XDocument doc = new XDocument();
+            //XElement rootNode = new XElement("User");
+
+            //rootNode.Add(new XElement("UserName", user.UserName));
+
+            //doc.Add(rootNode);
             throw new NotImplementedException();
         }
 
@@ -31,7 +46,9 @@ namespace BlogTemplate.Data
 
         public Task<ApplicationUser> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            ApplicationUser foundUser = new ApplicationUser();
+            foundUser.UserName = normalizedUserName;
+            return Task.Run(() => foundUser);
         }
 
         public Task<string> GetNormalizedUserNameAsync(ApplicationUser user, CancellationToken cancellationToken)
@@ -46,11 +63,18 @@ namespace BlogTemplate.Data
 
         public Task<string> GetUserIdAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
-        }
+            string expectedFilePath = $"{StorageFolder}\\{user.UserName}.xml";
+            if (_fileSystem.FileExists(expectedFilePath))
+            {
+                return null;
+            }
+
+            return Task.Run(() => "");
+            }
 
         public Task<string> GetUserNameAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
+            return Task.Run(() => user.UserName);
             throw new NotImplementedException();
         }
 
@@ -61,12 +85,13 @@ namespace BlogTemplate.Data
 
         public Task SetNormalizedUserNameAsync(ApplicationUser user, string normalizedName, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.Run(()=> user.UserName);
         }
 
         public Task SetPasswordHashAsync(ApplicationUser user, string passwordHash, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.Run(() => "");
+            //throw new NotImplementedException();
         }
 
         public Task SetUserNameAsync(ApplicationUser user, string userName, CancellationToken cancellationToken)
