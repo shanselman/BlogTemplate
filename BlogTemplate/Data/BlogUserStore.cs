@@ -13,6 +13,7 @@ namespace BlogTemplate.Data
     {
         const string StorageFolder = "UserFiles";
         private IFileSystem _fileSystem;
+        public static IdentityResult Success { get; }
         public BlogUserStore(IFileSystem fileSystem)
         {
             _fileSystem = fileSystem;
@@ -21,13 +22,13 @@ namespace BlogTemplate.Data
 
         public Task<IdentityResult> CreateAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
-            //XDocument doc = new XDocument();
-            //XElement rootNode = new XElement("User");
+            XDocument doc = new XDocument();
+            XElement rootNode = new XElement("User");
 
-            //rootNode.Add(new XElement("UserName", user.UserName));
-
-            //doc.Add(rootNode);
-            throw new NotImplementedException();
+            rootNode.Add(new XElement("UserName", user.UserName));
+            doc.Add(rootNode);
+            IdentityResult result = IdentityResult.Success;
+            return Task.Run(()=>result);
         }
 
         public Task<IdentityResult> DeleteAsync(ApplicationUser user, CancellationToken cancellationToken)
