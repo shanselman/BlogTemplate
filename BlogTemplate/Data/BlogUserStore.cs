@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using BlogTemplate.Models;
 using System.Xml.Linq;
+using System.IO;
 
 namespace BlogTemplate.Data
 {
@@ -22,11 +23,23 @@ namespace BlogTemplate.Data
 
         public Task<IdentityResult> CreateAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
+            string outputFilePath = $"{StorageFolder}\\{user.UserName}.xml";
             XDocument doc = new XDocument();
             XElement rootNode = new XElement("User");
 
             rootNode.Add(new XElement("UserName", user.UserName));
             doc.Add(rootNode);
+            using (MemoryStream ms = new MemoryStream())
+            {
+                doc.Save(ms);
+                ms.Seek(0, SeekOrigin.Begin);
+                using (StreamReader reader = new StreamReader(ms))
+                {
+                    string text = reader.ReadToEnd();
+                    _fileSystem.WriteFileText(outputFilePath, text);
+                }
+            }
+
             IdentityResult result = IdentityResult.Success;
             return Task.Run(()=>result);
         }
