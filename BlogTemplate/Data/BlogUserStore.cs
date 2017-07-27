@@ -55,7 +55,8 @@ namespace BlogTemplate.Data
 
         public Task<ApplicationUser> FindByIdAsync(string userId, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            ApplicationUser user = new ApplicationUser();
+            return Task.Run(() => user);
         }
 
         public Task<ApplicationUser> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
@@ -78,10 +79,10 @@ namespace BlogTemplate.Data
         public Task<string> GetUserIdAsync(ApplicationUser user, CancellationToken cancellationToken)
         {
             string expectedFilePath = $"{StorageFolder}\\{user.UserName}.xml";
-            if (_fileSystem.FileExists(expectedFilePath))
-            {
-                return null;
-            }
+            //if (_fileSystem.FileExists(expectedFilePath))
+            //{
+            //    return null;
+            //}
 
             return Task.Run(() => "");
             }
